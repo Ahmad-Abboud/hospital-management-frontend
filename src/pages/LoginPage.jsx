@@ -9,6 +9,7 @@ import {
   Grid,
   Container,
   Alert,
+  Grid2,
 } from "@mui/material";
 import { login } from "../redux/slices/userSlice"; // Import the async thunk for login
 import { useNavigate } from "react-router-dom";
@@ -153,14 +154,6 @@ export default function LoginPage() {
               </Button>
 
               {/* Sign Up link */}
-              <Box textAlign="center">
-                <Typography variant="body2">
-                  Don't have an account?{" "}
-                  <Link href="/signup" color="primary">
-                    Sign up
-                  </Link>
-                </Typography>
-              </Box>
             </Box>
           </Box>
         </Container>
