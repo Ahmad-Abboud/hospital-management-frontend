@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Provider store={store}>
-        <AppRoutes />;
+        <AppRoutes />
       </Provider>
     </>
   );
