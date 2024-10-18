@@ -8,6 +8,7 @@ import LoginPage from "./pages/LoginPage"; // Your login component
 import HomePage from "./pages/HomePage"; // Your home component
 import NotFoundPage from "./pages/NotFoundPage"; // Your 404 component
 import DepartmentPage from "./pages/DepartmentPage";
+import DoctorPage from "./pages/DoctorsPage";
 
 const AppRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         <Route path="/home" element={<HomePage />} />
 
         <Route path="/department" element={<DepartmentPage />} />
+        <Route path="/doctors" element={<DoctorPage />} />
 
         {/* 404 Page for all other routes */}
         <Route path="*" element={<NotFoundPage />} />
