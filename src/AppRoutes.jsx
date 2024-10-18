@@ -1,3 +1,4 @@
+// src/AppRoutes.js
 import {
   BrowserRouter as Router,
   Routes,
@@ -12,6 +13,7 @@ import DoctorPage from "./pages/DoctorsPage";
 import PatientsPage from "./pages/PatientsPage";
 import PatientDetails from "./pages/PatientDetails";
 import InventoryPage from "./pages/InventoryPage";
+import Layout from "./components/Layout"; // Import Layout
 
 const AppRoutes = () => {
   return (
@@ -21,15 +23,18 @@ const AppRoutes = () => {
         <Route path="/" element={<Navigate to="/login" replace />} />
         {/* Login route */}
         <Route path="/login" element={<LoginPage />} />
-        {/* Home page route (after successful login) */}
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/department" element={<DepartmentPage />} />
-        <Route path="/doctors" element={<DoctorPage />} />
-        <Route path="/patients" element={<PatientsPage />} />
-        <Route path="/inventory" element={<InventoryPage />} />
 
-        {/* Patient details route */}
-        <Route path="/patients/:id" element={<PatientDetails />} />
+        {/* Protected routes */}
+        <Route path="/" element={<Layout />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/department" element={<DepartmentPage />} />
+          <Route path="/doctors" element={<DoctorPage />} />
+          <Route path="/patients" element={<PatientsPage />} />
+          <Route path="/inventory" element={<InventoryPage />} />
+          {/* Patient details route */}
+          <Route path="/patients/:id" element={<PatientDetails />} />
+        </Route>
+
         {/* 404 Page for all other routes */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
