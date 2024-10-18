@@ -90,7 +90,7 @@ const DepartmentsGrid = () => {
   return (
     <Box>
       <BreadcrumbsNav
-        links={[{ name: "Home", path: "/" }]}
+        links={[{ name: "Home", path: "/home" }]}
         current="Departments"
       />
       <Box
