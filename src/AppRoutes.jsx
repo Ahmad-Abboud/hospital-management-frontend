@@ -11,6 +11,7 @@ import DepartmentPage from "./pages/DepartmentPage";
 import DoctorPage from "./pages/DoctorsPage";
 import PatientsPage from "./pages/PatientsPage";
 import PatientDetails from "./pages/PatientDetails";
+import InventoryPage from "./pages/InventoryPage";
 
 const AppRoutes = () => {
   return (
@@ -24,7 +25,8 @@ const AppRoutes = () => {
         <Route path="/home" element={<HomePage />} />
         <Route path="/department" element={<DepartmentPage />} />
         <Route path="/doctors" element={<DoctorPage />} />
-        <Route path="/Patients" element={<PatientsPage />} />
+        <Route path="/patients" element={<PatientsPage />} />
+        <Route path="/inventory" element={<InventoryPage />} />
 
         {/* Patient details route */}
         <Route path="/patients/:id" element={<PatientDetails />} />
