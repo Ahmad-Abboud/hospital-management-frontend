@@ -1,4 +1,3 @@
-// src/components/Sidebar.js
 import React from "react";
 import { List, ListItem, ListItemText } from "@mui/material";
 import { Link } from "react-router-dom";
