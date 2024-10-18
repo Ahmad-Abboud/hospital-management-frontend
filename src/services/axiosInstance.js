@@ -1,4 +1,3 @@
-// src/services/axiosInstance.js
 import axios from "axios";
 
 // Function to get the current token from localStorage

@@ -1,4 +1,3 @@
-// src/features/department/departmentSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../services/axiosInstance"; // Adjust path if needed
 

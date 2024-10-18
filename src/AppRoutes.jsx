@@ -1,4 +1,3 @@
-// src/AppRoutes.jsx
 import {
   BrowserRouter as Router,
   Routes,
