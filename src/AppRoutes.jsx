@@ -9,6 +9,8 @@ import HomePage from "./pages/HomePage"; // Your home component
 import NotFoundPage from "./pages/NotFoundPage"; // Your 404 component
 import DepartmentPage from "./pages/DepartmentPage";
 import DoctorPage from "./pages/DoctorsPage";
+import PatientsPage from "./pages/PatientsPage";
+import PatientDetails from "./pages/PatientDetails";
 
 const AppRoutes = () => {
   return (
@@ -16,16 +18,16 @@ const AppRoutes = () => {
       <Routes>
         {/* Default route that directs to LoginPage */}
         <Route path="/" element={<Navigate to="/login" replace />} />
-
         {/* Login route */}
         <Route path="/login" element={<LoginPage />} />
-
         {/* Home page route (after successful login) */}
         <Route path="/home" element={<HomePage />} />
-
         <Route path="/department" element={<DepartmentPage />} />
         <Route path="/doctors" element={<DoctorPage />} />
+        <Route path="/Patients" element={<PatientsPage />} />
 
+        {/* Patient details route */}
+        <Route path="/patients/:id" element={<PatientDetails />} />
         {/* 404 Page for all other routes */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
