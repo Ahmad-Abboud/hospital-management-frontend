@@ -6,11 +6,18 @@ export const login = createAsyncThunk(
   "user/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/auth/login", {
+      const response = await axiosInstance.post("/auth/admin/login", {
         email,
         password,
       });
-      return response.data; // Assuming the response contains the user data and token
+
+      // Check if the login was unsuccessful based on response data (e.g., `status: 'failed'`)
+      if (response.data.data.status === "failed") {
+        // Manually reject the value with the error message
+        return rejectWithValue(response.data);
+      }
+
+      return response.data.data.data; // Assuming the response contains the user data and token
     } catch (error) {
       if (error.response && error.response.data) {
         return rejectWithValue(error.response.data); // Return error data from API
@@ -54,14 +61,13 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        const { token, role, permissions, name, id, profilePicture } =
-          action.payload;
+        const { token, role, permissions, user_name, id, img } = action.payload;
         state.token = token;
         state.role = role;
         state.permissions = permissions;
-        state.name = name;
+        state.name = user_name;
         state.id = id;
-        state.profilePicture = profilePicture;
+        state.profilePicture = img;
         state.isLoading = false;
 
         // Save the token to localStorage for persistence
@@ -69,7 +75,7 @@ const userSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload || "Login failed";
+        state.error = action.payload.data.message || "Login failed";
       });
   },
 });

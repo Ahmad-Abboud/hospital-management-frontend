@@ -40,6 +40,7 @@ export default function LoginPage() {
       })
       .catch((err) => {
         console.error("Login error:", err);
+        setSubmitted(false);
       });
   };
 
