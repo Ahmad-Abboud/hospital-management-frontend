@@ -8,6 +8,7 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    Accept: "application/json",
   },
 });
 
@@ -24,7 +25,12 @@ axiosInstance.interceptors.request.use(
 
 // Error handling for requests
 axiosInstance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log(`HERE is the reponse:`);
+    console.log(response.data);
+
+    return response;
+  },
   (error) => {
     if (error.response) {
       console.error("Request error:", error.response.data);
