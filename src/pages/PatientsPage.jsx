@@ -139,20 +139,6 @@ const PatientsPage = () => {
       {/* Filters and Search */}
       <Box display="flex" justifyContent="space-between" mb={2}>
         <Select
-          value={treatmentFilter}
-          onChange={(e) => setTreatmentFilter(e.target.value)}
-          displayEmpty
-          variant="outlined"
-          sx={{ mr: 2 }}
-        >
-          <MenuItem value="">
-            <em>All Treatment</em>
-          </MenuItem>
-          <MenuItem value="Routine Check-Up">Routine Check-Up</MenuItem>
-          <MenuItem value="Cardiac Consultation">Cardiac Consultation</MenuItem>
-        </Select>
-
-        <Select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
           displayEmpty
