@@ -17,7 +17,11 @@ export const fetchAllDepartments = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get("/department");
-      return response.data.data; // Assuming the data is under `data.data`
+      if (response.data.data.status === "failed") {
+        // Manually reject the value with the error message
+        return rejectWithValue(response.data);
+      }
+      return response.data.data.data; // Assuming the data is under `data.data`
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -33,6 +37,10 @@ export const createDepartment = createAsyncThunk(
         "/department",
         newDepartmentData
       );
+      if (response.data.data.status === "failed") {
+        // Manually reject the value with the error message
+        return rejectWithValue(response.data);
+      }
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -72,9 +80,13 @@ export const showDepartment = createAsyncThunk(
 // Delete department
 export const deleteDepartment = createAsyncThunk(
   "departments/delete",
-  async (id, { rejectWithValue }) => {
+  async ({ id }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.delete(`/department/${id}`);
+      if (response.data.data.status === "failed") {
+        // Manually reject the value with the error message
+        return rejectWithValue(response.data);
+      }
       return { id };
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -110,7 +122,7 @@ const departmentSlice = createSlice({
       })
       .addCase(createDepartment.fulfilled, (state, action) => {
         state.loading = false;
-        state.departments.push(action.payload);
+        state.departments.push(action.payload.data);
       })
       .addCase(createDepartment.rejected, (state, action) => {
         state.loading = false;
@@ -127,6 +139,7 @@ const departmentSlice = createSlice({
         const index = state.departments.findIndex(
           (dept) => dept.id === action.payload.id
         );
+        console.log(state.departments);
         if (index !== -1) {
           state.departments[index] = action.payload;
         }

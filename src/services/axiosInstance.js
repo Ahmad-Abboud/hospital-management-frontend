@@ -8,7 +8,8 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    Accept: "application/json",
+    Accept: "*",
+    "Access-Control-Allow-Origin": "*",
   },
 });
 
@@ -26,9 +27,6 @@ axiosInstance.interceptors.request.use(
 // Error handling for requests
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log(`HERE is the reponse:`);
-    console.log(response.data);
-
     return response;
   },
   (error) => {

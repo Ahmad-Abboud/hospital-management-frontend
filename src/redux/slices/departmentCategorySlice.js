@@ -9,7 +9,8 @@ export const fetchAllCategories = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get("/department-category");
-      return response.data.data;
+
+      return response.data.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -77,7 +78,7 @@ export const deleteCategory = createAsyncThunk(
 // Initial state
 const initialState = {
   categories: [],
-  category: null,
+
   status: "idle",
   error: null,
 };

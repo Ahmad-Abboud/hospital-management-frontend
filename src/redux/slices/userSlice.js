@@ -10,7 +10,6 @@ export const login = createAsyncThunk(
         email,
         password,
       });
-
       // Check if the login was unsuccessful based on response data (e.g., `status: 'failed'`)
       if (response.data.data.status === "failed") {
         // Manually reject the value with the error message
