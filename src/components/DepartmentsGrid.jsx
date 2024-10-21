@@ -28,7 +28,7 @@ import { fetchAllCategories } from "../redux/slices/departmentCategorySlice";
 const DepartmentsGrid = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [pressed, setPressed] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -56,6 +56,7 @@ const DepartmentsGrid = () => {
   } = useSelector((state) => state.departmentCategory);
 
   if (departmentsLoading || categoriesLoading) {
+    console.log(departments);
     return <LoadingSpinner />;
   }
 
@@ -82,6 +83,7 @@ const DepartmentsGrid = () => {
   const handleOpenModal = (dept) => {
     setSelectedDepartment(dept);
     setFormData(dept || { name: "", department_category_id: "" });
+    setPressed(false);
     setOpenModal(true);
   };
   const handleCloseModal = () => setOpenModal(false);
@@ -94,6 +96,7 @@ const DepartmentsGrid = () => {
 
   // Handle form submission (for create or update)
   const handleSubmitForm = (e) => {
+    setPressed(true);
     e.preventDefault();
     if (selectedDepartment) {
       // Update department
@@ -101,7 +104,10 @@ const DepartmentsGrid = () => {
         updateDepartment({ id: selectedDepartment.id, updatedData: formData })
       )
         .unwrap()
-        .then(() => setOpenModal(false))
+        .then(() => {
+          // setPressed((x) => !x);
+          setOpenModal(false);
+        })
         .catch((err) => console.error("Update error:", err));
     } else {
       // Create new department
@@ -186,6 +192,7 @@ const DepartmentsGrid = () => {
               })),
             },
           ]}
+          pressed={pressed}
           formData={formData}
           setFormData={setFormData}
           handleSubmit={handleSubmitForm}

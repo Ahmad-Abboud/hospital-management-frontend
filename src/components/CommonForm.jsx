@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, TextField, Button, MenuItem } from "@mui/material";
 
-const CommonForm = ({ formFields, handleSubmit, formData, setFormData }) => {
+const CommonForm = ({
+  formFields,
+  handleSubmit,
+  formData,
+  setFormData,
+  pressed,
+  setPressed,
+}) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -27,8 +34,13 @@ const CommonForm = ({ formFields, handleSubmit, formData, setFormData }) => {
             ))}
         </TextField>
       ))}
-      <Button type="submit" variant="contained" color="primary">
-        Submit
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={pressed === true}
+      >
+        {pressed ? "Submiting..." : "Submit"}
       </Button>
     </Box>
   );
