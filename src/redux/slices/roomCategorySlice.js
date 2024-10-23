@@ -9,7 +9,8 @@ export const fetchAllRoomCategories = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get("/room-category");
-      return response.data.data;
+
+      return response.data.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -22,7 +23,7 @@ export const createRoomCategory = createAsyncThunk(
   async (categoryData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post("/room-category", categoryData);
-      return response.data.data;
+      return response.data.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -38,7 +39,7 @@ export const updateRoomCategory = createAsyncThunk(
         `/room-category/${id}`,
         categoryData
       );
-      return response.data.data;
+      return response.data.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -51,7 +52,7 @@ export const deleteRoomCategory = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.delete(`/room-category/${id}`);
-      return response.data.data;
+      return response.data.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

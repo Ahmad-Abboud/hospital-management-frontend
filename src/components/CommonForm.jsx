@@ -11,6 +11,7 @@ const CommonForm = ({
 }) => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setPressed(false);
   };
 
   return (
@@ -40,7 +41,8 @@ const CommonForm = ({
         color="primary"
         disabled={pressed === true}
       >
-        {pressed ? "Submiting..." : "Submit"}
+        Submit
+        {/* {pressed ? "Submit" : "Submit"} */}
       </Button>
     </Box>
   );

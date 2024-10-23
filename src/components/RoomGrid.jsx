@@ -8,23 +8,18 @@ import SearchBar from "./SearchBar";
 import LoadingSpinner from "./LoadingSpinner";
 import ConfirmationDialog from "./ConfirmationDialog";
 import { Alert, Box, Button } from "@mui/material";
-
-// Mock Data for rooms and categories
-const mockRooms = [
-  { id: 1, name: "Room A", room_category_id: 1, status: "available" },
-  { id: 2, name: "Room B", room_category_id: 2, status: "occupied" },
-  { id: 3, name: "Room C", room_category_id: 3, status: "maintenance" },
-];
-
-const mockRoomCategories = [
-  { id: 1, name: "ICU" },
-  { id: 2, name: "General" },
-  { id: 3, name: "Maternity" },
-];
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createRoom,
+  deleteRoom,
+  fetchRooms,
+  updateRoom,
+} from "../redux/slices/roomSlice";
+import { fetchAllRoomCategories } from "../redux/slices/roomCategorySlice";
+import { fetchAllDepartments } from "../redux/slices/departmentSlice";
 
 const RoomsGrid = () => {
-  const [rooms, setRooms] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
   const [pressed, setPressed] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [openModal, setOpenModal] = useState(false);
@@ -35,32 +30,69 @@ const RoomsGrid = () => {
   const [formData, setFormData] = useState({
     name: "",
     room_category_id: "",
+    floor_id: "",
+    department_id: "",
     status: "",
   });
 
   useEffect(() => {
-    // Simulate data fetching
-    setRooms(mockRooms);
-    setCategories(mockRoomCategories);
-  }, []);
+    dispatch(fetchRooms());
+    dispatch(fetchAllRoomCategories());
+    dispatch(fetchAllDepartments());
+  }, [dispatch]);
 
+  const {
+    rooms,
+    loading: roomsLoading,
+    error: roomsError,
+  } = useSelector((state) => state.room);
+  const {
+    roomCategories: categories,
+    loading: categoriesLoading,
+    error: categoriesError,
+  } = useSelector((state) => state.roomCategory);
+  const {
+    departments,
+    loading: departmentsLoading,
+    error: departmentsError,
+  } = useSelector((state) => state.department);
+
+  if (roomsLoading || categoriesLoading || departmentsLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (roomsError || categoriesError || departmentsError) {
+    return <Alert severity="error">{roomsError.data.message}</Alert>;
+  }
   // Columns for the CommonTable component
   const columns = [
-    { id: "name", label: "Room Name" },
-    { id: "room_category_id", label: "Category" },
+    { id: "room_number", label: "Room Number" },
+    { id: "room_category", label: "Category" },
+    { id: "floor", label: "Floor" },
     { id: "status", label: "Status" },
+    { id: "department", label: "Department" },
     { id: "actions", label: "Actions", disableSorting: true },
   ];
-
   // Handle search filter
   const filteredRooms = rooms.filter((room) =>
-    room ? room.name.toLowerCase().includes(searchValue.toLowerCase()) : ""
+    room
+      ? `${room.room_number}`.toLowerCase().includes(searchValue.toLowerCase())
+      : ""
   );
-
+  //   console.log(departments);
+  //   return;
   // Handle open/close modals
   const handleOpenModal = (room) => {
     setSelectedRoom(room);
-    setFormData(room || { name: "", room_category_id: "", status: "" });
+    console.log(room);
+    setFormData(
+      room || {
+        room_category_id: "",
+        department_id: "",
+        floor_id: "",
+        status: "",
+      }
+    );
     setPressed(false);
     setOpenModal(true);
   };
@@ -76,26 +108,28 @@ const RoomsGrid = () => {
   const handleSubmitForm = (e) => {
     setPressed(true);
     e.preventDefault();
-
     if (selectedRoom) {
-      // Update room in mock data
-      const updatedRooms = rooms.map((room) =>
-        room.id === selectedRoom.id ? { ...room, ...formData } : room
-      );
-      setRooms(updatedRooms);
-      setOpenModal(false);
+      // Update room
+      console.log(selectedRoom, "HEREE");
+      dispatch(updateRoom({ id: selectedRoom.id, roomData: formData }))
+        .unwrap()
+        .then(() => setOpenModal(false))
+        .catch((err) => console.error("Update error:", err));
     } else {
-      // Create new room in mock data
-      const newRoom = { ...formData, id: rooms.length + 1 };
-      setRooms([...rooms, newRoom]);
-      setOpenModal(false);
+      // Create new room
+      dispatch(createRoom(formData))
+        .unwrap()
+        .then(() => setOpenModal(false))
+        .catch((err) => console.error("Create error:", err));
     }
   };
 
   // Handle room deletion
   const handleDeleteRoom = () => {
-    const updatedRooms = rooms.filter((room) => room.id !== selectedRoom.id);
-    setRooms(updatedRooms);
+    dispatch(deleteRoom({ id: selectedRoom.id }))
+      .unwrap()
+      .then(() => setOpenModal(false))
+      .catch((err) => console.error("Delete error:", err));
     setOpenConfirmDialog(false);
   };
 
@@ -148,7 +182,6 @@ const RoomsGrid = () => {
       >
         <CommonForm
           formFields={[
-            { label: "Room Name", name: "name" },
             {
               label: "Category",
               name: "room_category_id",
@@ -158,6 +191,16 @@ const RoomsGrid = () => {
                 value: cat.id,
               })),
             },
+            {
+              label: "Department",
+              name: "department_id",
+              type: "select",
+              options: departments.map((cat) => ({
+                label: cat.name,
+                value: cat.id,
+              })),
+            },
+            { label: "Floor Num", name: "floor_id", type: "text" },
             { label: "Status", name: "status", type: "text" },
           ]}
           pressed={pressed}
@@ -171,7 +214,7 @@ const RoomsGrid = () => {
         open={openConfirmDialog}
         onClose={handleCloseConfirmDialog}
         onConfirm={handleDeleteRoom}
-        message={`Are you sure you want to delete the room "${selectedRoom?.name}"?`}
+        message={`Are you sure you want to delete the room "${selectedRoom?.room_number}"?`}
       />
     </Box>
   );

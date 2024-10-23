@@ -9,7 +9,7 @@ export const createRoom = createAsyncThunk(
   async (roomData, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post("/room", roomData);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -22,7 +22,7 @@ export const updateRoom = createAsyncThunk(
   async ({ id, roomData }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.put(`/room/${id}`, roomData);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -48,7 +48,7 @@ export const fetchRooms = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get("/room");
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -58,10 +58,11 @@ export const fetchRooms = createAsyncThunk(
 // Delete room
 export const deleteRoom = createAsyncThunk(
   "room/deleteRoom",
-  async (id, { rejectWithValue }) => {
+  async ({ id }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.delete(`/room/${id}`);
-      return response.data;
+
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -82,7 +83,7 @@ const roomSlice = createSlice({
     builder
       // Create room
       .addCase(createRoom.pending, (state) => {
-        state.loading = true;
+        // state.loading = true;
         state.error = null;
       })
       .addCase(createRoom.fulfilled, (state, action) => {
@@ -96,7 +97,7 @@ const roomSlice = createSlice({
 
       // Update room
       .addCase(updateRoom.pending, (state) => {
-        state.loading = true;
+        // state.loading = true;
         state.error = null;
       })
       .addCase(updateRoom.fulfilled, (state, action) => {
@@ -143,7 +144,7 @@ const roomSlice = createSlice({
 
       // Delete room
       .addCase(deleteRoom.pending, (state) => {
-        state.loading = true;
+        // state.loading = true;
         state.error = null;
       })
       .addCase(deleteRoom.fulfilled, (state, action) => {
