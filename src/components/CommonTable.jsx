@@ -27,6 +27,12 @@ const CommonTable = ({
     setPage(0);
   };
 
+  // Calculate the rows to display based on pagination
+  const paginatedRows = rows.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
+
   return (
     <Paper>
       <TableContainer>
@@ -39,7 +45,7 @@ const CommonTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {paginatedRows.map((row, index) => (
               <TableRow key={index}>
                 {columns.map((column) => (
                   <TableCell key={column.id}>{row[column.id]}</TableCell>
@@ -51,7 +57,7 @@ const CommonTable = ({
       </TableContainer>
       <TablePagination
         component="div"
-        count={rows.length}
+        count={rows.length} // Total number of rows
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
