@@ -122,7 +122,6 @@ const departmentSlice = createSlice({
       })
       .addCase(createDepartment.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(state.departments);
         state.departments.push(action.payload.data);
       })
       .addCase(createDepartment.rejected, (state, action) => {
@@ -134,11 +133,9 @@ const departmentSlice = createSlice({
       .addCase(updateDepartment.pending, (state) => {
         // state.loading = true;
         state.error = null;
-        // console.log("in loading:", state.departments);
       })
       .addCase(updateDepartment.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload.data);
         const index = state.departments.findIndex(
           (dept) => dept.id === action.payload.data.id
         );

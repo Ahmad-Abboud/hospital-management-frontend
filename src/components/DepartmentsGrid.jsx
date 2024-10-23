@@ -28,7 +28,7 @@ import { fetchAllCategories } from "../redux/slices/departmentCategorySlice";
 const DepartmentsGrid = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [pressed, setPressed] = useState(false);
+  const [pressed, setPressed] = useState(true);
   const [searchValue, setSearchValue] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -38,6 +38,7 @@ const DepartmentsGrid = () => {
   const [formData, setFormData] = useState({
     name: "",
     department_category_id: "",
+    description: "",
   });
   useEffect(() => {
     dispatch(fetchAllDepartments());
@@ -66,7 +67,7 @@ const DepartmentsGrid = () => {
   // Columns for the CommonTable component
   const columns = [
     { id: "name", label: "Department Name" },
-    { id: "department_category_id", label: "Category" },
+    { id: "department_category", label: "Category" },
     { id: "doctors", label: "Staff Count" },
     { id: "description", label: "Description" },
     { id: "actions", label: "Actions", disableSorting: true },
@@ -83,10 +84,13 @@ const DepartmentsGrid = () => {
   const handleOpenModal = (dept) => {
     setSelectedDepartment(dept);
     setFormData(dept || { name: "", department_category_id: "" });
-    setPressed(false);
+    // setPressed(false);
     setOpenModal(true);
   };
-  const handleCloseModal = () => setOpenModal(false);
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setPressed(true);
+  };
 
   const handleOpenConfirmDialog = (dept) => {
     setSelectedDepartment(dept);
@@ -100,6 +104,7 @@ const DepartmentsGrid = () => {
     e.preventDefault();
     if (selectedDepartment) {
       // Update department
+      console.log(formData);
       dispatch(
         updateDepartment({ id: selectedDepartment.id, updatedData: formData })
       )
@@ -196,6 +201,7 @@ const DepartmentsGrid = () => {
           formData={formData}
           setFormData={setFormData}
           handleSubmit={handleSubmitForm}
+          setPressed={setPressed}
         />
       </CommonModal>
 
