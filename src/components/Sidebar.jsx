@@ -20,6 +20,9 @@ const Sidebar = () => {
       <ListItem component={Link} to="/inventory">
         <ListItemText primary="Inventory" />
       </ListItem>
+      <ListItem component={Link} to="/room">
+        <ListItemText primary="Rooms" />
+      </ListItem>
     </List>
   );
 };
