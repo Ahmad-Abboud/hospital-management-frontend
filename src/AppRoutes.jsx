@@ -13,6 +13,7 @@ import PatientsPage from "./pages/PatientsPage";
 import PatientDetails from "./pages/PatientDetails";
 import InventoryPage from "./pages/InventoryPage";
 import Layout from "./components/Layout";
+import RoomsPage from "./pages/RoomsPage";
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
           <Route path="/home" element={<HomePage />} />
           <Route path="/department" element={<DepartmentPage />} />
           <Route path="/doctors" element={<DoctorPage />} />
+          <Route path="/room" element={<RoomsPage />} />
           <Route path="/patients" element={<PatientsPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/patients/:id" element={<PatientDetails />} />
