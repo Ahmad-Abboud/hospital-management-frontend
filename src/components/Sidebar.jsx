@@ -23,6 +23,9 @@ const Sidebar = () => {
       <ListItem component={Link} to="/room">
         <ListItemText primary="Rooms" />
       </ListItem>
+      <ListItem component={Link} to="/manageEmployee">
+        <ListItemText primary="Employee Management" />
+      </ListItem>
     </List>
   );
 };

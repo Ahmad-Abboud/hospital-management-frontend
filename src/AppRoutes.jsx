@@ -14,6 +14,7 @@ import PatientDetails from "./pages/PatientDetails";
 import InventoryPage from "./pages/InventoryPage";
 import Layout from "./components/Layout";
 import RoomsPage from "./pages/RoomsPage";
+import EmployeeManagement from "./pages/EmployeeManagement";
 
 const AppRoutes = () => {
   return (
@@ -32,6 +33,8 @@ const AppRoutes = () => {
           <Route path="/room" element={<RoomsPage />} />
           <Route path="/patients" element={<PatientsPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
+          <Route path="/manageEmployee" element={<EmployeeManagement />} />
+
           <Route path="/patients/:id" element={<PatientDetails />} />
         </Route>
 
