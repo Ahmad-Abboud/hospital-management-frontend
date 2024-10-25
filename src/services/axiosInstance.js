@@ -16,7 +16,8 @@ const axiosInstance = axios.create({
 // Interceptor to add the Authorization header dynamically
 axiosInstance.interceptors.request.use(
   (config) => {
-    if (getToken()) {
+    if (!config.noAuth && getToken()) {
+      console.log(config.noAuth);
       config.headers.Authorization = `Bearer ${getToken()}`;
     }
     return config;
