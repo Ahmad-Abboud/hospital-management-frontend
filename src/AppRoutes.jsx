@@ -15,6 +15,7 @@ import InventoryPage from "./pages/InventoryPage";
 import Layout from "./components/Layout";
 import RoomsPage from "./pages/RoomsPage";
 import EmployeeManagement from "./pages/EmployeeManagement";
+import EmployeeLoginPage from "./pages/EmployeeLoginPage";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
 
         {/* Login route */}
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/emp/login" element={<EmployeeLoginPage />} />
 
         {/* Protected routes */}
         <Route path="/" element={<Layout />}>
@@ -34,7 +36,6 @@ const AppRoutes = () => {
           <Route path="/patients" element={<PatientsPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/manageEmployee" element={<EmployeeManagement />} />
-
           <Route path="/patients/:id" element={<PatientDetails />} />
         </Route>
 

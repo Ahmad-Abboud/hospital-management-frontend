@@ -14,7 +14,7 @@ import {
 import { login } from "../redux/slices/employeeLoginSlice"; // Import the async thunk for login
 import { useNavigate } from "react-router-dom";
 
-export default function LoginPage() {
+export default function EmployeeLoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
