@@ -6,10 +6,14 @@ export const login = createAsyncThunk(
   "user/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/auth/admin/login", {
-        email,
-        password,
-      });
+      const response = await axiosInstance.post(
+        "/auth/admin/login",
+        {
+          email,
+          password,
+        },
+        { noAuth: true }
+      );
       // Check if the login was unsuccessful based on response data (e.g., `status: 'failed'`)
       if (response.data.data.status === "failed") {
         // Manually reject the value with the error message
