@@ -183,18 +183,6 @@ const EmployeeManagement = () => {
       >
         <CommonForm
           formFields={[
-            // (first_name: ""),
-            // (last_name: "Nurse"),
-            // (email: ""),
-            // (password: ""),
-            // (job_title: ""),
-            // (department_id: ""),
-            // (hire_date: ""),
-            // (salary: ""),
-            // (phone_number: ""),
-            // (employment_status: ""),
-            // (gender: ""),
-
             { label: "first_name", name: "first_name", type: "text" },
             { label: "last_name", name: "last_name", type: "text" },
 
