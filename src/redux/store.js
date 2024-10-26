@@ -7,6 +7,7 @@ import roomReducer from "./slices/roomSlice";
 import logger from "redux-logger";
 import employeeSliceReducer from "./slices/employeeSlice";
 import employeeLoginSliceReducer from "./slices/employeeLoginSlice";
+import doctorReducer from "./slices/doctorSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     roomCategory: roomCategorySliceReducer,
     employee: employeeSliceReducer,
     employeeUser: employeeLoginSliceReducer,
+    doctor: doctorReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
