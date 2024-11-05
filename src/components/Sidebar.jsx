@@ -1,32 +1,64 @@
 import React from "react";
-import { List, ListItem, ListItemText } from "@mui/material";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Typography,
+  Toolbar,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <List sx={{ width: "250px", bgcolor: "background.paper" }}>
-      <ListItem component={Link} to="/home">
-        <ListItemText primary="Home" />
-      </ListItem>
-      <ListItem component={Link} to="/department">
-        <ListItemText primary="Departments" />
-      </ListItem>
-      <ListItem component={Link} to="/doctors">
-        <ListItemText primary="Doctors" />
-      </ListItem>
-      <ListItem component={Link} to="/patients">
-        <ListItemText primary="Patients" />
-      </ListItem>
-      <ListItem component={Link} to="/inventory">
-        <ListItemText primary="Inventory" />
-      </ListItem>
-      <ListItem component={Link} to="/room">
-        <ListItemText primary="Rooms" />
-      </ListItem>
-      <ListItem component={Link} to="/manageEmployee">
-        <ListItemText primary="Employee Management" />
-      </ListItem>
-    </List>
+    <Box
+      sx={{
+        width: "250px",
+        height: "100vh",
+        position: "sticky",
+        top: 0, // Ensures the sidebar stays at the top when scrolling
+        background: "linear-gradient(to bottom, #4f3cc9, #1e3a8a)",
+        color: "white",
+        p: 2,
+      }}
+    >
+      {/* Sidebar title */}
+      <Typography
+        variant="h6"
+        sx={{ mb: 2, textAlign: "center", color: "white", fontWeight: "bold" }}
+      >
+        Admin Panel
+      </Typography>
+
+      <List>
+        {[
+          { label: "Home", to: "/home" },
+          { label: "Departments", to: "/department" },
+          { label: "Doctors", to: "/doctors" },
+          { label: "Patients", to: "/patients" },
+          { label: "Inventory", to: "/inventory" },
+          { label: "Rooms", to: "/room" },
+          { label: "Employee Management", to: "/manageEmployee" },
+        ].map((item) => (
+          <ListItem
+            button
+            component={Link}
+            to={item.to}
+            key={item.label}
+            sx={{
+              color: "white",
+              mb: 1,
+              "&:hover": {
+                bgcolor: "rgba(255, 255, 255, 0.1)",
+                borderRadius: 1,
+              },
+            }}
+          >
+            <ListItemText primary={item.label} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
   );
 };
 

@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
   TablePagination,
+  Box,
 } from "@mui/material";
 
 const CommonTable = ({
@@ -34,13 +35,25 @@ const CommonTable = ({
   );
 
   return (
-    <Paper>
-      <TableContainer>
-        <Table>
+    <Paper sx={{ borderRadius: 2, boxShadow: 1 }}>
+      <TableContainer sx={{ maxHeight: "60vh", overflow: "auto" }}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               {columns.map((column) => (
-                <TableCell key={column.id}>{column.label}</TableCell>
+                <TableCell
+                  key={column.id}
+                  sx={{
+                    backgroundColor: "primary.light",
+                    color: "white",
+                    fontWeight: "bold",
+                    textAlign: "left",
+                    padding: 1.5,
+                    borderRight: "1px solid rgba(224, 224, 224, 1)", // Right border for header
+                  }}
+                >
+                  {column.label}
+                </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -48,7 +61,19 @@ const CommonTable = ({
             {paginatedRows.map((row, index) => (
               <TableRow key={index}>
                 {columns.map((column) => (
-                  <TableCell key={column.id}>{row[column.id]}</TableCell>
+                  <TableCell
+                    key={column.id}
+                    sx={{
+                      padding: 1.5,
+                      borderBottom: "1px solid rgba(224, 224, 224, 1)",
+                      borderRight: "1px solid rgba(224, 224, 224, 1)", // Right border for each cell
+                      "&:last-child": {
+                        borderRight: "none", // Remove right border for the last cell
+                      },
+                    }}
+                  >
+                    {row[column.id]}
+                  </TableCell>
                 ))}
               </TableRow>
             ))}
@@ -57,11 +82,15 @@ const CommonTable = ({
       </TableContainer>
       <TablePagination
         component="div"
-        count={rows.length} // Total number of rows
+        count={rows.length}
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        sx={{
+          bgcolor: "background.default",
+          borderTop: "1px solid rgba(224, 224, 224, 1)",
+        }}
       />
     </Paper>
   );

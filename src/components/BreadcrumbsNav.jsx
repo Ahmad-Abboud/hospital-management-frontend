@@ -1,17 +1,41 @@
 import React from "react";
-import { Breadcrumbs, Link, Typography } from "@mui/material";
+import { Breadcrumbs, Link, Typography, Box } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
 const BreadcrumbsNav = ({ links, current }) => {
   return (
-    <Breadcrumbs aria-label="breadcrumb">
-      {links.map((link) => (
-        <Link component={RouterLink} key={link.name} to={link.path}>
-          {link.name}
-        </Link>
-      ))}
-      <Typography color="textPrimary">{current}</Typography>
-    </Breadcrumbs>
+    <Box
+      sx={{
+        padding: 2,
+        bgcolor: "background.default",
+        borderRadius: 1,
+        boxShadow: 1,
+        mb: 2,
+      }}
+    >
+      <Breadcrumbs aria-label="breadcrumb" sx={{ color: "text.secondary" }}>
+        {links.map((link, index) => (
+          <Link
+            key={link.name}
+            component={RouterLink}
+            to={link.path}
+            sx={{
+              color: "primary.main",
+              textDecoration: "none",
+              "&:hover": {
+                textDecoration: "underline",
+                color: "primary.dark",
+              },
+            }}
+          >
+            {link.name}
+          </Link>
+        ))}
+        <Typography sx={{ color: "text.primary", fontWeight: "bold" }}>
+          {current}
+        </Typography>
+      </Breadcrumbs>
+    </Box>
   );
 };
 
