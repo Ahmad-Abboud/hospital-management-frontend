@@ -5,14 +5,14 @@ import {
   Button,
   Box,
   Typography,
-  Link,
-  Grid,
   Container,
   Alert,
-  Grid2,
+  Avatar,
 } from "@mui/material";
 import { login } from "../redux/slices/employeeLoginSlice"; // Import the async thunk for login
 import { useNavigate } from "react-router-dom";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import loginImage from "../assets/login-image.jpg"; // replace w
 
 export default function EmployeeLoginPage() {
   const dispatch = useDispatch();
@@ -45,120 +45,98 @@ export default function EmployeeLoginPage() {
   };
 
   return (
-    <Grid container component="main" sx={{ height: "100vh" }}>
-      {/* Left side with image placeholder */}
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-700 via-blue-800 to-indigo-900">
+      <Container
+        maxWidth="sm"
         sx={{
-          backgroundColor: "purple",
-          color: "white",
           display: "flex",
+          flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          height: { xs: "100vh", md: "90vh" },
+          bgcolor: "white",
+          borderRadius: 2,
+          m: 3,
+          p: 3,
+          boxSizing: "border-box",
+          overflow: "hidden", // Prevents content from overflowing
         }}
       >
-        <Box textAlign="center">
-          <Typography
-            component="h1"
-            variant="h4"
-            sx={{ mb: 4, fontWeight: "bold" }}
-          >
-            Hospital logo
-          </Typography>
-          {/* You can replace this with your actual image */}
-          <Box
-            sx={{
-              width: 256,
-              height: 256,
-              backgroundColor: "rgba(128, 0, 128, 0.8)",
-            }}
+        {/* Image above the form */}
+        <Box
+          component="img"
+          src={loginImage}
+          alt="Login"
+          sx={{
+            width: "100%",
+            height: "auto",
+            borderRadius: 1,
+            mb: 3,
+            maxHeight: { xs: "30vh", md: "40vh" }, // Adjust image height for small screens
+          }}
+        />
+
+        {/* Lock icon and title */}
+        <Avatar sx={{ bgcolor: "primary.main", mb: 1 }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography
+          component="h1"
+          variant="h5"
+          sx={{ mb: 3, textAlign: "center" }}
+        >
+          Sign in As an Employee
+        </Typography>
+
+        {error && <Alert severity="error">{error}</Alert>}
+
+        {/* Login form */}
+        <Box
+          component="form"
+          onSubmit={handleLogin}
+          noValidate
+          sx={{ width: "100%", px: 2 }}
+        >
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={isLoading || submitted}
+            sx={{
+              mt: 3,
+              mb: 2,
+              bgcolor: "primary.main",
+              "&:hover": { bgcolor: "primary.dark" },
+            }}
+          >
+            {isLoading ? "Signing in..." : "Sign in"}
+          </Button>
         </Box>
-      </Grid>
-
-      {/* Right side with login form */}
-      <Grid
-        item
-        xs={12}
-        sm={8}
-        md={5}
-        component={Box}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        bgcolor="white"
-      >
-        <Container maxWidth="xs">
-          <Box display="flex" flexDirection="column" alignItems="center">
-            <Typography
-              component="h2"
-              variant="h5"
-              sx={{ mt: 6, fontWeight: "bold", color: "gray" }}
-            >
-              Sign in to your account
-            </Typography>
-
-            {/* Error message from Redux state */}
-            {error && <Alert severity="error">{error}</Alert>}
-
-            <Box
-              component="form"
-              onSubmit={handleLogin}
-              noValidate
-              sx={{ mt: 3 }}
-            >
-              {/* Email field */}
-              <TextField
-                required
-                fullWidth
-                id="email-address"
-                label="Email address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                sx={{ mb: 2 }}
-              />
-
-              {/* Password field */}
-              <TextField
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                sx={{ mb: 2 }}
-              />
-
-              {/* Sign In Button */}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                disabled={isLoading || submitted} // Disable button while loading or after submission
-                sx={{
-                  mt: 2,
-                  mb: 2,
-                  bgcolor: "purple",
-                  "&:hover": { bgcolor: "darkpurple" },
-                }}
-              >
-                {isLoading ? "Signing in..." : "Sign in"}
-              </Button>
-
-              {/* Sign Up link */}
-            </Box>
-          </Box>
-        </Container>
-      </Grid>
-    </Grid>
+      </Container>
+    </div>
   );
 }

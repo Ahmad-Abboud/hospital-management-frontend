@@ -5,32 +5,32 @@ import {
   Button,
   Box,
   Typography,
-  Alert,
   Container,
+  Alert,
   Avatar,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import loginImage from "../assets/login-image.jpg"; // replace with your image path
-import { login } from "../redux/slices/userSlice"; // Import the async thunk for login
+import { login } from "../redux/slices/doctorLogin";
 import { useNavigate } from "react-router-dom";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import loginImage from "../assets/login-image.jpg";
 
-export default function LoginPage() {
+export default function DoctorLoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const { isLoading, error } = useSelector((state) => state.user);
+
   const handleLogin = (e) => {
     e.preventDefault();
     setSubmitted(true);
 
-    // Dispatch the login action from the user slice
     dispatch(login({ email, password }))
-      .unwrap() // If using `unwrap()` to handle fulfilled/rejected states manually
+      .unwrap()
       .then(() => {
-        // Navigate to home on successful login
         navigate("/home");
       })
       .catch((err) => {
@@ -80,7 +80,7 @@ export default function LoginPage() {
           variant="h5"
           sx={{ mb: 3, textAlign: "center" }}
         >
-          Sign in As an Admin
+          Sign in As a Doctor
         </Typography>
 
         {error && <Alert severity="error">{error}</Alert>}

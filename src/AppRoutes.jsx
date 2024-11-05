@@ -16,6 +16,7 @@ import Layout from "./components/Layout";
 import RoomsPage from "./pages/RoomsPage";
 import EmployeeManagement from "./pages/EmployeeManagement";
 import EmployeeLoginPage from "./pages/EmployeeLoginPage";
+import DoctorLoginPage from "./pages/DoctorLoginPage";
 
 const AppRoutes = () => {
   return (
@@ -26,6 +27,7 @@ const AppRoutes = () => {
         {/* Login route */}
         <Route path="/login" element={<LoginPage />} />
         <Route path="/emp/login" element={<EmployeeLoginPage />} />
+        <Route path="/doctor/login" element={<DoctorLoginPage />} />
 
         {/* Protected routes */}
         <Route path="/" element={<Layout />}>
